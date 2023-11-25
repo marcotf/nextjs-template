@@ -1,5 +1,5 @@
-import { Job, JobInsert } from "@/domains/job/entities/Job.entity.";
-import { JobRepository } from "@/domains/job/repositories/Job.repository";
+import { type Job, type JobInsert } from "@/domains/job/entities/Job.entity.";
+import { type JobRepository } from "@/domains/job/repositories/Job.repository";
 import { db } from "@/server/db";
 import { jobs } from "@/server/db/schema";
 import { eq } from "drizzle-orm";

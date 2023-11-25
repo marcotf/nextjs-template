@@ -1,7 +1,5 @@
-import Link from "next/link";
-
-import { CreateJob } from "@/app/_components/create-job";
 import { api } from "@/trpc/server";
+import Link from "next/link";
 
 export default async function Home() {
   const hello = await api.job.hello({ text: "from tRPC" });
@@ -42,26 +40,51 @@ export default async function Home() {
           </p>
         </div>
 
-        <CrudShowcase />
+        {/* <CrudShowcase /> */}
       </div>
     </main>
   );
 }
 
-async function CrudShowcase() {
-  const latestPost = await api.job.getLatest();
+// async function CrudShowcase() {
+//   const latestPost = await api.job.getLatest();
 
-  return (
-    <div className="w-full max-w-xs">
-      {latestPost ? (
-        <p className="truncate">
-          Your most recent job: {latestPost.name} {latestPost.jobCategory?.name}
-        </p>
-      ) : (
-        <p>You have no jobs yet.</p>
-      )}
+//   const createJobAction = async (formData: FormData) => {
+//     "use server";
 
-      <CreateJob />
-    </div>
-  );
-}
+//     await api.job.create({
+//       name: formData.get("name")?.toString() ?? "",
+//     });
+
+//     revalidatePath("/");
+//   };
+
+//   return (
+//     <div className="w-full max-w-xs">
+//       {latestPost ? (
+//         <p className="truncate">
+//           Your most recent job: {latestPost.name} {latestPost.jobCategory?.name}
+//         </p>
+//       ) : (
+//         <p>You have no jobs yet.</p>
+//       )}
+
+//       <form action={createJobAction} className="flex flex-col gap-2">
+//         <input
+//           type="text"
+//           name="name"
+//           placeholder="Title"
+//           className="w-full rounded-full px-4 py-2 text-black"
+//         />
+//         <button
+//           type="submit"
+//           className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
+//           // disabled={createJob.isLoading}
+//         >
+//           {/* {createJob.isLoading ? "Submitting..." : "Submit"} */}
+//           Submit
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }

@@ -1,4 +1,4 @@
-import { Job, JobInsert } from "../entities/Job.entity.";
+import { type Job, type JobInsert } from "../entities/Job.entity.";
 
 export interface JobRepository {
   findById(id: string): Promise<Job | null>;

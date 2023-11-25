@@ -1,8 +1,8 @@
 import { db } from "@/server/db";
 import { jobCategories } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import { JobCategory } from "../entities/JobCategory.entity";
-import { JobCategoryRepository } from "./JobCategory.repository";
+import { type JobCategory } from "../entities/JobCategory.entity";
+import { type JobCategoryRepository } from "./JobCategory.repository";
 
 export class JobCategoryRepositoryDrizzle implements JobCategoryRepository {
   async findById(id: string): Promise<JobCategory | null> {

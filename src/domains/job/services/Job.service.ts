@@ -1,6 +1,6 @@
-import { Job } from "../entities/Job.entity.";
-import { JobRepository } from "../repositories/Job.repository";
-import { JobCategoryRepository } from "../repositories/JobCategory.repository";
+import { type Job } from "../entities/Job.entity.";
+import { type JobRepository } from "../repositories/Job.repository";
+import { type JobCategoryRepository } from "../repositories/JobCategory.repository";
 
 export class JobService {
   constructor(
@@ -25,6 +25,9 @@ export class JobService {
       await this.jobCategoryRepository.findById(jobCategoryId);
 
     if (!jobCategory) throw new Error("Job category not found");
+
+    if (name.length < 2 || name.length > 64)
+      throw new Error("Job name must be between 2 and 64 characters");
 
     await this.jobRepository.create({ name, jobCategory });
   }

@@ -1,4 +1,4 @@
-import { JobCategory } from "../entities/JobCategory.entity";
+import { type JobCategory } from "../entities/JobCategory.entity";
 
 export interface JobCategoryRepository {
   findById(id: string): Promise<JobCategory | null>;

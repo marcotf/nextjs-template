@@ -1,4 +1,4 @@
-import { JobCategory } from "./JobCategory.entity";
+import { type JobCategory } from "./JobCategory.entity";
 
 export type Job = {
   id: string;
