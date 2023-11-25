@@ -12,22 +12,22 @@ const jobService = new JobService(jobRepository, jobCategoryRepository);
 export const jobRouter = createTRPCRouter({
   hello: protectedProcedure
     .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
+    .query(({ ctx, input }) => {
       return {
-        greeting: `Hello ${input.text}`,
+        greeting: `Hello ${input.text} with user ${ctx.auth.userId}!`,
       };
     }),
 
   create: protectedProcedure
     .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ input }) => {
       await jobService.createJob(
         input.name,
         "e867dac2-cea8-401e-ac50-b5ec323094ca",
       );
     }),
 
-  getLatest: protectedProcedure.query(({ ctx }) => {
+  getLatest: protectedProcedure.query(() => {
     return jobService.getLastJob();
   }),
 });

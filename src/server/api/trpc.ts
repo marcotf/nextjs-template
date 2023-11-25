@@ -7,16 +7,15 @@
  * need to use are documented accordingly near the end.
  */
 import { TRPCError, initTRPC } from "@trpc/server";
-import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@/server/db";
 import {
-  SignedInAuthObject,
-  SignedOutAuthObject,
   auth,
+  type SignedInAuthObject,
+  type SignedOutAuthObject,
 } from "@clerk/nextjs/server";
+import { NextRequest } from "next/server";
 
 /**
  * 1. CONTEXT
@@ -26,9 +25,9 @@ import {
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
 
-interface CreateContextOptions {
-  headers: Headers;
+interface AuthContext {
   auth: SignedInAuthObject | SignedOutAuthObject;
+  headers: Headers;
 }
 
 /**
@@ -41,11 +40,10 @@ interface CreateContextOptions {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-export const createInnerTRPCContext = (opts: CreateContextOptions) => {
+export const createInnerTRPCContext = ({ auth, headers }: AuthContext) => {
   return {
-    headers: opts.headers,
-    auth: opts.auth,
-    db,
+    headers: headers,
+    auth: auth,
   };
 };
 
@@ -59,7 +57,7 @@ export const createTRPCContext = (opts: { req: NextRequest }) => {
   // Fetch stuff that depends on the request
 
   return createInnerTRPCContext({
-    headers: opts.req.headers,
+    headers: opts.req.headers as Headers,
     auth: auth(),
   });
 };
